@@ -36,14 +36,14 @@ class NFTsApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def n_ft_info(self, authorization, address, token_id, **kwargs):  # noqa: E501
+    def nft_info(self, authorization, address, token_id, **kwargs):  # noqa: E501
         """Get NFT info, mainly owner and metadata  # noqa: E501
 
         Get NFT info, mainly owner and metadata  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.n_ft_info(authorization, address, token_id, async_req=True)
+        >>> thread = api.nft_info(authorization, address, token_id, async_req=True)
         >>> result = thread.get()
 
         :param authorization: Bearer Open_JWT (required)
@@ -68,16 +68,16 @@ class NFTsApi(object):
         :rtype: ServicesNFT
         """
         kwargs['_return_http_data_only'] = True
-        return self.n_ft_info_with_http_info(authorization, address, token_id, **kwargs)  # noqa: E501
+        return self.nft_info_with_http_info(authorization, address, token_id, **kwargs)  # noqa: E501
 
-    def n_ft_info_with_http_info(self, authorization, address, token_id, **kwargs):  # noqa: E501
+    def nft_info_with_http_info(self, authorization, address, token_id, **kwargs):  # noqa: E501
         """Get NFT info, mainly owner and metadata  # noqa: E501
 
         Get NFT info, mainly owner and metadata  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.n_ft_info_with_http_info(authorization, address, token_id, async_req=True)
+        >>> thread = api.nft_info_with_http_info(authorization, address, token_id, async_req=True)
         >>> result = thread.get()
 
         :param authorization: Bearer Open_JWT (required)
@@ -133,19 +133,19 @@ class NFTsApi(object):
             if key not in all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method n_ft_info" % key
+                    " to method nft_info" % key
                 )
             local_var_params[key] = val
         del local_var_params['kwargs']
         # verify the required parameter 'authorization' is set
         if self.api_client.client_side_validation and local_var_params.get('authorization') is None:  # noqa: E501
-            raise ApiValueError("Missing the required parameter `authorization` when calling `n_ft_info`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `authorization` when calling `nft_info`")  # noqa: E501
         # verify the required parameter 'address' is set
         if self.api_client.client_side_validation and local_var_params.get('address') is None:  # noqa: E501
-            raise ApiValueError("Missing the required parameter `address` when calling `n_ft_info`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `address` when calling `nft_info`")  # noqa: E501
         # verify the required parameter 'token_id' is set
         if self.api_client.client_side_validation and local_var_params.get('token_id') is None:  # noqa: E501
-            raise ApiValueError("Missing the required parameter `token_id` when calling `n_ft_info`")  # noqa: E501
+            raise ApiValueError("Missing the required parameter `token_id` when calling `nft_info`")  # noqa: E501
 
         collection_formats = {}
 

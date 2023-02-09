@@ -110,7 +110,7 @@ Class | Method | HTTP request | Description
 *MintsApi* | [**easy_mint_by_metadata**](docs/MintsApi.md#easy_mint_by_metadata) | **POST** /mints/easy/urls | Mint NFT with metadata
 *MintsApi* | [**get_mint_detail**](docs/MintsApi.md#get_mint_detail) | **GET** /mints/{id} | Mint NFT detail
 *MintsApi* | [**list_mints**](docs/MintsApi.md#list_mints) | **GET** /mints/ | Obtain NFT list
-*NFTsApi* | [**n_ft_info**](docs/NFTsApi.md#n_ft_info) | **GET** /nft/{address}/{token_id} | Get NFT info, mainly owner and metadata
+*NFTsApi* | [**nft_info**](docs/NFTsApi.md#nft_info) | **GET** /nft/{address}/{token_id} | Get NFT info, mainly owner and metadata
 *TransactionApi* | [**get_transaction_by_id**](docs/TransactionApi.md#get_transaction_by_id) | **GET** /tx/{id} | Get transaction informantion by ID
 *TransfersApi* | [**batch_transfer_nft**](docs/TransfersApi.md#batch_transfer_nft) | **POST** /transfers/customizable/batch | Batch Transfer NFTs
 *TransfersApi* | [**get_transfer_detail**](docs/TransfersApi.md#get_transfer_detail) | **GET** /transfers/{id} | Transfer NFT detail

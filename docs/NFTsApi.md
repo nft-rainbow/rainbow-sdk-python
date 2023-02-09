@@ -4,11 +4,11 @@ All URIs are relative to *http://api.nftrainbow.cn/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**n_ft_info**](NFTsApi.md#n_ft_info) | **GET** /nft/{address}/{token_id} | Get NFT info, mainly owner and metadata
+[**nft_info**](NFTsApi.md#nft_info) | **GET** /nft/{address}/{token_id} | Get NFT info, mainly owner and metadata
 
 
-# **n_ft_info**
-> ServicesNFT n_ft_info(authorization, address, token_id)
+# **nft_info**
+> ServicesNFT nft_info(authorization, address, token_id)
 
 Get NFT info, mainly owner and metadata
 
@@ -39,10 +39,10 @@ token_id = 'token_id_example' # str | token_id
 
     try:
         # Get NFT info, mainly owner and metadata
-        api_response = api_instance.n_ft_info(authorization, address, token_id)
+        api_response = api_instance.nft_info(authorization, address, token_id)
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling NFTsApi->n_ft_info: %s\n" % e)
+        print("Exception when calling NFTsApi->nft_info: %s\n" % e)
 ```
 
 ### Parameters
