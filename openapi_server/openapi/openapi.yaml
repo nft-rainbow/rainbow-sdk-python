@@ -1,0 +1,2895 @@
+openapi: 3.0.1
+info:
+  contact: {}
+  description: The responses of the open api in swagger focus on the data field rather
+    than the code and the message fields
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Rainbow-API
+  version: "1.0"
+servers:
+- url: http://api.nftrainbow.cn/v1
+- url: https://api.nftrainbow.cn/v1
+paths:
+  /burns:
+    get:
+      description: Get the NFT burned list information.
+      operationId: get_burn_list
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.BurnTaskQueryResult'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Obtain the burned NFTs list
+      tags:
+      - Burns
+      x-openapi-router-controller: openapi_server.controllers.burns_controller
+    post:
+      description: Burn NFT by admin
+      operationId: burn_nft
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.BurnDto'
+        description: burn_dto
+        required: true
+        x-body-name: burn_dto
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.BurnTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Burn NFT
+      tags:
+      - Burns
+      x-codegen-request-body-name: burn_dto
+      x-openapi-router-controller: openapi_server.controllers.burns_controller
+  /burns/customizable/batch:
+    post:
+      description: Batch burn NFT by admin
+      operationId: burn_batch
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.BurnBatchDto'
+        description: burn_batch_dto
+        required: true
+        x-body-name: burn_batch_dto
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/models.BurnTask'
+                type: array
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Batch burn NFT
+      tags:
+      - Burns
+      x-codegen-request-body-name: burn_batch_dto
+      x-openapi-router-controller: openapi_server.controllers.burns_controller
+  /burns/{id}:
+    get:
+      description: Get NFT Burn detail info
+      operationId: get_burn_detail
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.BurnTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Burn NFT detail
+      tags:
+      - Burns
+      x-openapi-router-controller: openapi_server.controllers.burns_controller
+  /contracts/:
+    get:
+      description: Get the contract list containing the contracts deployed through
+        the specified app.
+      operationId: list_contracts
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: page
+        in: query
+        name: page
+        schema:
+          type: integer
+      - description: limit
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.ContractTaskQueryResult'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Obtain contract list
+      tags:
+      - Contract
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+    post:
+      description: Deploy a ERC721 or ERC1155 contract.
+      operationId: deploy_contract
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.ContractDeployDto'
+        description: contract_info
+        required: true
+        x-body-name: contract_info
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.Contract'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Deploy contract
+      tags:
+      - Contract
+      x-codegen-request-body-name: contract_info
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+  /contracts/detail/{id}:
+    get:
+      description: Get Contract info
+      operationId: get_contract_info
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.Contract'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Contract detail
+      tags:
+      - Contract
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+  /contracts/{address}/admin:
+    get:
+      description: Get Contract Admin
+      operationId: get_contract_admin
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: contract address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Admin address
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+        "599":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Businesss error
+      security:
+      - ApiKeyAuth: []
+      summary: "Get administrator of contract, only work on conflux chain"
+      tags:
+      - Contract
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+    put:
+      description: "Update administrator of contract, only work on conflux chain"
+      operationId: update_contract_admin
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: contract address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.ContractAdminUpdateDto'
+        description: contract admin update info
+        required: true
+        x-body-name: admin_info
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.SendTxResp'
+          description: Transaction id
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+        "599":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Businesss error
+      security:
+      - ApiKeyAuth: []
+      summary: Update administrator of contract
+      tags:
+      - Contract
+      x-codegen-request-body-name: admin_info
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+  /contracts/{address}/sponsor:
+    get:
+      description: Get the sponsor of the specified contract according to address.
+      operationId: get_contract_sponsor_info
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      - description: chain
+        in: query
+        name: chain
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.SponsorInfo'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid address
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Query sponsor
+      tags:
+      - Contract
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+    post:
+      description: "Set the sponsor for a contract according to the address with specified\
+        \ value(gas-1, storage-50)"
+      operationId: set_contract_sponsor
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Contract address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      - description: chain
+        in: query
+        name: chain
+        schema:
+          type: string
+      - description: "Open auto sponsor or not, for mainnet contract keep user account\
+          \ have enough balance"
+        in: query
+        name: auto_sponsor
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.SetSponsorResp'
+          description: Transaction id" "success
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid address
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Set sponsor
+      tags:
+      - Contract
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+  /contracts/{address}/sponsor/whitelist:
+    delete:
+      description: "Remove contract sponsored whitelist, only work on conflux chain"
+      operationId: remove_contract_sponsor_whitelist
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: contract address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              items:
+                type: string
+              type: array
+        description: Removing sponsor whitelist
+        required: true
+        x-body-name: users
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.SendTxResp'
+          description: Transaction id
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+        "599":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Businesss error
+      security:
+      - ApiKeyAuth: []
+      summary: Remove contract sponsored whitelist
+      tags:
+      - Contract
+      x-codegen-request-body-name: users
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+    get:
+      description: "Get contract sponsored whitelist, only work on conflux chain"
+      operationId: get_contract_sponsored_whitelist
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: contract address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: Contract sponsored whitelist
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+        "599":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Businesss error
+      security:
+      - ApiKeyAuth: []
+      summary: Get contract sponsored whitelist
+      tags:
+      - Contract
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+    post:
+      description: "Add contract sponsored whitelist, only work on conflux chain"
+      operationId: add_contract_sponsor_whitelist
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: contract address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              items:
+                type: string
+              type: array
+        description: Adding sponsor whitelist
+        required: true
+        x-body-name: users
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.SendTxResp'
+          description: Transaction id
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+        "599":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Businesss error
+      security:
+      - ApiKeyAuth: []
+      summary: Add contract sponsored whitelist
+      tags:
+      - Contract
+      x-codegen-request-body-name: users
+      x-openapi-router-controller: openapi_server.controllers.contract_controller
+  /files/:
+    get:
+      description: Get the file list containing the info of the files uploaded in
+        the specified app
+      operationId: list_files
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: page
+        in: query
+        name: page
+        schema:
+          type: string
+      - description: limit
+        in: query
+        name: limit
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.FilesQueryResult'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Obtain file list
+      tags:
+      - Files
+      x-openapi-router-controller: openapi_server.controllers.files_controller
+    post:
+      description: "Upload a file which can be a video, an image and so on"
+      operationId: upload_file
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFile_request'
+        required: true
+        x-body-name: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.UploadFilesResponse'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Upload file
+      tags:
+      - Files
+      x-openapi-router-controller: openapi_server.controllers.files_controller
+      x-codegen-request-body-name: body
+  /files/oss:
+    post:
+      description: "Upload a file to OSS, which can be a video, an image and so on"
+      operationId: upload_file_to_oss
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFile_request'
+        required: true
+        x-body-name: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.UploadFilesResponse'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Upload file to OSS
+      tags:
+      - Files
+      x-openapi-router-controller: openapi_server.controllers.files_controller
+      x-codegen-request-body-name: body
+  /login:
+    post:
+      description: Login the app to get the JWT according to the app_id and app_secret
+      operationId: login_app
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/middlewares.appLogin'
+        description: "login info, contain app_id and app_secret"
+        required: true
+        x-body-name: appLoginInfo
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/middlewares.LoginResp'
+          description: auth token
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Unauthorized
+      summary: App login
+      tags:
+      - Login
+      x-codegen-request-body-name: appLoginInfo
+      x-openapi-router-controller: openapi_server.controllers.login_controller
+  /metadata/:
+    get:
+      description: Get the metadata list containing the info of the metadata created
+        in the specified app
+      operationId: list_metadatas
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: page
+        in: query
+        name: page
+        schema:
+          type: string
+      - description: limit
+        in: query
+        name: limit
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.ExposedMetadataQueryResult'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Obtain metadata list
+      tags:
+      - Metadata
+      x-openapi-router-controller: openapi_server.controllers.metadata_controller
+    post:
+      description: "Create NFT metadata by providing the info including name, description\
+        \ and so on"
+      operationId: create_metadata
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.MetadataDto'
+        description: metadata_info
+        required: true
+        x-body-name: metadata_info
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.ExposedMetadata'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Create NFT metadata
+      tags:
+      - Metadata
+      x-codegen-request-body-name: metadata_info
+      x-openapi-router-controller: openapi_server.controllers.metadata_controller
+  /metadata/{metadata_id}:
+    get:
+      description: Query the metadata according to metadata_id
+      operationId: get_metadat_info
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: metadata_id
+        in: path
+        name: metadata_id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.ExposedMetadata'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Query metadata
+      tags:
+      - Metadata
+      x-openapi-router-controller: openapi_server.controllers.metadata_controller
+  /mints/:
+    get:
+      description: Get the NFT list containing the NFTs minted in the specified app
+      operationId: list_mints
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: page
+        in: query
+        name: page
+        schema:
+          type: integer
+      - description: limit
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: contract
+        in: query
+        name: contract
+        schema:
+          type: string
+      - description: mint_to
+        in: query
+        name: mint_to
+        schema:
+          type: string
+      - description: status
+        in: query
+        name: status
+        schema:
+          type: integer
+      - description: chain
+        in: query
+        name: chain
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.MintTaskQueryResult'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Obtain NFT list
+      tags:
+      - Mints
+      x-openapi-router-controller: openapi_server.controllers.mints_controller
+    post:
+      description: Mint a NFT by providing a metadata url
+      operationId: custom_mint
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.CustomMintDto'
+        description: custom_mint_dto
+        required: true
+        x-body-name: custom_mint_dto
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.MintTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Mint NFT
+      tags:
+      - Mints
+      x-codegen-request-body-name: custom_mint_dto
+      x-openapi-router-controller: openapi_server.controllers.mints_controller
+  /mints/customizable/batch:
+    post:
+      description: Mint several NFTs once
+      operationId: batch_custom_mint
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.CustomMintBatchDto'
+        description: custom_mint_batch_dto
+        required: true
+        x-body-name: custom_mint_batch_dto
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/models.MintTask'
+                type: array
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Batch Mint NFTs
+      tags:
+      - Mints
+      x-codegen-request-body-name: custom_mint_batch_dto
+      x-openapi-router-controller: openapi_server.controllers.mints_controller
+  /mints/easy/files:
+    post:
+      description: "Mint a NFT by uploading a file which can be a video, image and\
+        \ so on"
+      operationId: easy_mint_by_file
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EasyMintByFile_request'
+        required: true
+        x-body-name: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.MintTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Mint NFT with file
+      tags:
+      - Mints
+      x-openapi-router-controller: openapi_server.controllers.mints_controller
+      x-codegen-request-body-name: body
+  /mints/easy/urls:
+    post:
+      description: Mint a NFT by providing a file url to create the metadata
+      operationId: easy_mint_by_metadata
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.EasyMintMetaDto'
+        description: easy_mint_meta_info
+        required: true
+        x-body-name: easy_mint_meta_info
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.MintTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Mint NFT with metadata
+      tags:
+      - Mints
+      x-codegen-request-body-name: easy_mint_meta_info
+      x-openapi-router-controller: openapi_server.controllers.mints_controller
+  /mints/{id}:
+    get:
+      description: Get NFT detail info
+      operationId: get_mint_detail
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.MintTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Mint NFT detail
+      tags:
+      - Mints
+      x-openapi-router-controller: openapi_server.controllers.mints_controller
+  /nft/{address}/{token_id}:
+    get:
+      description: "Get NFT info, mainly owner and metadata"
+      operationId: nft_info
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: address
+        in: path
+        name: address
+        required: true
+        schema:
+          type: string
+      - description: token_id
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.NFT'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: "Get NFT info, mainly owner and metadata"
+      tags:
+      - NFTs
+      x-openapi-router-controller: openapi_server.controllers.nfts_controller
+  /refresh_token:
+    get:
+      description: Obtain a new JWT
+      operationId: refresh_auth
+      parameters:
+      - description: Bearer openapi_token
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/middlewares.LoginResp'
+          description: refreshed auth token
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Unauthorized
+      security:
+      - ApiKeyAuth: []
+      summary: Refresh JWT
+      tags:
+      - Login
+      x-openapi-router-controller: openapi_server.controllers.login_controller
+  /transfers/:
+    get:
+      description: Get the NFT list containing the transferred NFT information.
+      operationId: list_transfer
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: page
+        in: query
+        name: page
+        schema:
+          type: integer
+      - description: limit
+        in: query
+        name: limit
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.TransferTaskQueryResult'
+          description: OK
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Obtain the transferred NFTs list
+      tags:
+      - Transfers
+      x-openapi-router-controller: openapi_server.controllers.transfers_controller
+  /transfers/customizable:
+    post:
+      description: Transfer NFT by admin
+      operationId: transfer_nft
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.TransferDto'
+        description: transfer_dto
+        required: true
+        x-body-name: transfer_dto
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.TransferTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Transfer NFT
+      tags:
+      - Transfers
+      x-codegen-request-body-name: transfer_dto
+      x-openapi-router-controller: openapi_server.controllers.transfers_controller
+  /transfers/customizable/batch:
+    post:
+      description: Transfer several NFTs once
+      operationId: batch_transfer_nft
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/services.TransferBatchDto'
+        description: transfer_batch_dto
+        required: true
+        x-body-name: transfer_batch_dto
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/models.TransferTask'
+                type: array
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Batch Transfer NFTs
+      tags:
+      - Transfers
+      x-codegen-request-body-name: transfer_batch_dto
+      x-openapi-router-controller: openapi_server.controllers.transfers_controller
+  /transfers/{id}:
+    get:
+      description: Get NFT Transfer detail info
+      operationId: get_transfer_detail
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/models.TransferTask'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+      security:
+      - ApiKeyAuth: []
+      summary: Transfer NFT detail
+      tags:
+      - Transfers
+      x-openapi-router-controller: openapi_server.controllers.transfers_controller
+  /tx/{id}:
+    get:
+      description: Get transaction informantion by ID
+      operationId: get_transaction_by_id
+      parameters:
+      - description: Bearer Open_JWT
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/services.TxResp'
+          description: Transaction informantion
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Invalid request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Internal Server error
+        "599":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rainbow_errors.RainbowErrorDetailInfo'
+          description: Businesss error
+      security:
+      - ApiKeyAuth: []
+      summary: Get transaction informantion by ID
+      tags:
+      - Transaction
+      x-openapi-router-controller: openapi_server.controllers.transaction_controller
+components:
+  schemas:
+    gorm.DeletedAt:
+      example:
+        valid: true
+        time: time
+      properties:
+        time:
+          title: time
+          type: string
+        valid:
+          description: Valid is true if Time is not NULL
+          title: valid
+          type: boolean
+      title: gorm.DeletedAt
+      type: object
+    middlewares.LoginResp:
+      example:
+        expire: expire
+        token: token
+      properties:
+        expire:
+          title: expire
+          type: string
+        token:
+          title: token
+          type: string
+      title: middlewares.LoginResp
+      type: object
+    middlewares.appLogin:
+      properties:
+        app_id:
+          title: app_id
+          type: string
+        app_secret:
+          title: app_secret
+          type: string
+      required:
+      - app_id
+      - app_secret
+      title: middlewares.appLogin
+      type: object
+    models.BurnTask:
+      example:
+        amount: 6
+        chain_type: 5
+        chain_id: 5
+        contract: contract
+        created_at: created_at
+        error: error
+        tx_id: 3
+        deleted_at:
+          valid: true
+          time: time
+        contract_type: 2
+        token_id: token_id
+        updated_at: updated_at
+        id: 7
+        app_id: 1
+        user: user
+        hash: hash
+        status: 9
+      properties:
+        amount:
+          title: amount
+          type: integer
+        app_id:
+          title: app_id
+          type: integer
+        chain_id:
+          title: chain_id
+          type: integer
+        chain_type:
+          title: chain_type
+          type: integer
+        contract:
+          title: contract
+          type: string
+        contract_type:
+          title: contract_type
+          type: integer
+        created_at:
+          title: created_at
+          type: string
+        deleted_at:
+          $ref: '#/components/schemas/gorm.DeletedAt'
+        error:
+          title: error
+          type: string
+        hash:
+          title: hash
+          type: string
+        id:
+          title: id
+          type: integer
+        status:
+          description: "0-pending, 1-success, 2-failed"
+          title: status
+          type: integer
+        token_id:
+          title: token_id
+          type: string
+        tx_id:
+          title: tx_id
+          type: integer
+        updated_at:
+          title: updated_at
+          type: string
+        user:
+          title: user
+          type: string
+      title: models.BurnTask
+      type: object
+    models.BurnTaskQueryResult:
+      example:
+        count: 0
+        items:
+        - amount: 6
+          chain_type: 5
+          chain_id: 5
+          contract: contract
+          created_at: created_at
+          error: error
+          tx_id: 3
+          deleted_at:
+            valid: true
+            time: time
+          contract_type: 2
+          token_id: token_id
+          updated_at: updated_at
+          id: 7
+          app_id: 1
+          user: user
+          hash: hash
+          status: 9
+        - amount: 6
+          chain_type: 5
+          chain_id: 5
+          contract: contract
+          created_at: created_at
+          error: error
+          tx_id: 3
+          deleted_at:
+            valid: true
+            time: time
+          contract_type: 2
+          token_id: token_id
+          updated_at: updated_at
+          id: 7
+          app_id: 1
+          user: user
+          hash: hash
+          status: 9
+      properties:
+        count:
+          title: count
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/models.BurnTask'
+          title: items
+          type: array
+      title: models.BurnTaskQueryResult
+      type: object
+    models.Contract:
+      example:
+        symbol: symbol
+        chain_type: 5
+        tokens_transferable_by_admin: true
+        address: address
+        chain_id: 1
+        tokens_burnable: true
+        transfer_cooldown_time: 9
+        created_at: created_at
+        owner_address: owner_address
+        royalties_address: royalties_address
+        error: error
+        royalties_bps: 2
+        tx_id: 3
+        type: 2
+        deleted_at:
+          valid: true
+          time: time
+        updated_at: updated_at
+        base_uri: base_uri
+        name: name
+        auto_sponsor: true
+        id: 5
+        tokens_transferable_by_user: true
+        app_id: 6
+        hash: hash
+        status: 7
+      properties:
+        address:
+          title: address
+          type: string
+        app_id:
+          title: app_id
+          type: integer
+        auto_sponsor:
+          title: auto_sponsor
+          type: boolean
+        base_uri:
+          title: base_uri
+          type: string
+        chain_id:
+          title: chain_id
+          type: integer
+        chain_type:
+          title: chain_type
+          type: integer
+        created_at:
+          title: created_at
+          type: string
+        deleted_at:
+          $ref: '#/components/schemas/gorm.DeletedAt'
+        error:
+          title: error
+          type: string
+        hash:
+          title: hash
+          type: string
+        id:
+          title: id
+          type: integer
+        name:
+          title: name
+          type: string
+        owner_address:
+          title: owner_address
+          type: string
+        royalties_address:
+          title: royalties_address
+          type: string
+        royalties_bps:
+          title: royalties_bps
+          type: integer
+        status:
+          description: "0-pending, 1-success, 2-failed"
+          title: status
+          type: integer
+        symbol:
+          title: symbol
+          type: string
+        tokens_burnable:
+          title: tokens_burnable
+          type: boolean
+        tokens_transferable_by_admin:
+          title: tokens_transferable_by_admin
+          type: boolean
+        tokens_transferable_by_user:
+          title: tokens_transferable_by_user
+          type: boolean
+        transfer_cooldown_time:
+          title: transfer_cooldown_time
+          type: integer
+        tx_id:
+          title: tx_id
+          type: integer
+        type:
+          description: "1-ERC721, 2-ERC1155"
+          title: type
+          type: integer
+        updated_at:
+          title: updated_at
+          type: string
+      title: models.Contract
+      type: object
+    models.ContractTaskQueryResult:
+      example:
+        count: 0
+        items:
+        - symbol: symbol
+          chain_type: 5
+          tokens_transferable_by_admin: true
+          address: address
+          chain_id: 1
+          tokens_burnable: true
+          transfer_cooldown_time: 9
+          created_at: created_at
+          owner_address: owner_address
+          royalties_address: royalties_address
+          error: error
+          royalties_bps: 2
+          tx_id: 3
+          type: 2
+          deleted_at:
+            valid: true
+            time: time
+          updated_at: updated_at
+          base_uri: base_uri
+          name: name
+          auto_sponsor: true
+          id: 5
+          tokens_transferable_by_user: true
+          app_id: 6
+          hash: hash
+          status: 7
+        - symbol: symbol
+          chain_type: 5
+          tokens_transferable_by_admin: true
+          address: address
+          chain_id: 1
+          tokens_burnable: true
+          transfer_cooldown_time: 9
+          created_at: created_at
+          owner_address: owner_address
+          royalties_address: royalties_address
+          error: error
+          royalties_bps: 2
+          tx_id: 3
+          type: 2
+          deleted_at:
+            valid: true
+            time: time
+          updated_at: updated_at
+          base_uri: base_uri
+          name: name
+          auto_sponsor: true
+          id: 5
+          tokens_transferable_by_user: true
+          app_id: 6
+          hash: hash
+          status: 7
+      properties:
+        count:
+          title: count
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/models.Contract'
+          title: items
+          type: array
+      title: models.ContractTaskQueryResult
+      type: object
+    models.ExposedFile:
+      example:
+        file_url: file_url
+        updated_at: updated_at
+        file_name: file_name
+        file_type: file_type
+        created_at: created_at
+        id: 1
+        deleted_at:
+          valid: true
+          time: time
+        file_size: 6
+      properties:
+        created_at:
+          title: created_at
+          type: string
+        deleted_at:
+          $ref: '#/components/schemas/gorm.DeletedAt'
+        file_name:
+          title: file_name
+          type: string
+        file_size:
+          title: file_size
+          type: integer
+        file_type:
+          title: file_type
+          type: string
+        file_url:
+          title: file_url
+          type: string
+        id:
+          title: id
+          type: integer
+        updated_at:
+          title: updated_at
+          type: string
+      title: models.ExposedFile
+      type: object
+    models.ExposedMetadata:
+      example:
+        image: image
+        animation_url: animation_url
+        updated_at: updated_at
+        metadata_id: metadata_id
+        name: name
+        created_at: created_at
+        description: description
+        attributes:
+        - display_type: display_type
+          attribute_name: attribute_name
+          value: value
+          trait_type: trait_type
+        - display_type: display_type
+          attribute_name: attribute_name
+          value: value
+          trait_type: trait_type
+        id: 6
+        deleted_at:
+          valid: true
+          time: time
+        uri: uri
+        external_link: external_link
+      properties:
+        animation_url:
+          title: animation_url
+          type: string
+        attributes:
+          items:
+            $ref: '#/components/schemas/models.ExposedMetadataAttribute'
+          title: attributes
+          type: array
+        created_at:
+          title: created_at
+          type: string
+        deleted_at:
+          $ref: '#/components/schemas/gorm.DeletedAt'
+        description:
+          title: description
+          type: string
+        external_link:
+          title: external_link
+          type: string
+        id:
+          title: id
+          type: integer
+        image:
+          title: image
+          type: string
+        metadata_id:
+          title: metadata_id
+          type: string
+        name:
+          title: name
+          type: string
+        updated_at:
+          title: updated_at
+          type: string
+        uri:
+          title: uri
+          type: string
+      required:
+      - description
+      - image
+      - name
+      title: models.ExposedMetadata
+      type: object
+    models.ExposedMetadataAttribute:
+      example:
+        display_type: display_type
+        attribute_name: attribute_name
+        value: value
+        trait_type: trait_type
+      properties:
+        attribute_name:
+          title: attribute_name
+          type: string
+        display_type:
+          title: display_type
+          type: string
+        trait_type:
+          title: trait_type
+          type: string
+        value:
+          description: TODO support number
+          title: value
+          type: string
+      title: models.ExposedMetadataAttribute
+      type: object
+    models.ExposedMetadataQueryResult:
+      example:
+        count: 0
+        items:
+        - image: image
+          animation_url: animation_url
+          updated_at: updated_at
+          metadata_id: metadata_id
+          name: name
+          created_at: created_at
+          description: description
+          attributes:
+          - display_type: display_type
+            attribute_name: attribute_name
+            value: value
+            trait_type: trait_type
+          - display_type: display_type
+            attribute_name: attribute_name
+            value: value
+            trait_type: trait_type
+          id: 6
+          deleted_at:
+            valid: true
+            time: time
+          uri: uri
+          external_link: external_link
+        - image: image
+          animation_url: animation_url
+          updated_at: updated_at
+          metadata_id: metadata_id
+          name: name
+          created_at: created_at
+          description: description
+          attributes:
+          - display_type: display_type
+            attribute_name: attribute_name
+            value: value
+            trait_type: trait_type
+          - display_type: display_type
+            attribute_name: attribute_name
+            value: value
+            trait_type: trait_type
+          id: 6
+          deleted_at:
+            valid: true
+            time: time
+          uri: uri
+          external_link: external_link
+      properties:
+        count:
+          title: count
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/models.ExposedMetadata'
+          title: items
+          type: array
+      title: models.ExposedMetadataQueryResult
+      type: object
+    models.FilesQueryResult:
+      example:
+        count: 0
+        items:
+        - file_url: file_url
+          updated_at: updated_at
+          file_name: file_name
+          file_type: file_type
+          created_at: created_at
+          id: 1
+          deleted_at:
+            valid: true
+            time: time
+          file_size: 6
+        - file_url: file_url
+          updated_at: updated_at
+          file_name: file_name
+          file_type: file_type
+          created_at: created_at
+          id: 1
+          deleted_at:
+            valid: true
+            time: time
+          file_size: 6
+      properties:
+        count:
+          title: count
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/models.ExposedFile'
+          title: items
+          type: array
+      title: models.FilesQueryResult
+      type: object
+    models.MintTask:
+      example:
+        mint_to: mint_to
+        amount: 6
+        chain_type: 5
+        chain_id: 5
+        contract: contract
+        created_at: created_at
+        error: error
+        tx_id: 2
+        deleted_at:
+          valid: true
+          time: time
+        contract_type: 2
+        token_uri: token_uri
+        token_id: token_id
+        updated_at: updated_at
+        mint_type: 9
+        id: 7
+        app_id: 1
+        hash: hash
+        status: 3
+      properties:
+        amount:
+          title: amount
+          type: integer
+        app_id:
+          title: app_id
+          type: integer
+        chain_id:
+          title: chain_id
+          type: integer
+        chain_type:
+          title: chain_type
+          type: integer
+        contract:
+          title: contract
+          type: string
+        contract_type:
+          title: contract_type
+          type: integer
+        created_at:
+          title: created_at
+          type: string
+        deleted_at:
+          $ref: '#/components/schemas/gorm.DeletedAt'
+        error:
+          title: error
+          type: string
+        hash:
+          title: hash
+          type: string
+        id:
+          title: id
+          type: integer
+        mint_to:
+          title: mint_to
+          type: string
+        mint_type:
+          title: mint_type
+          type: integer
+        status:
+          description: "0-pending, 1-success, 2-failed"
+          title: status
+          type: integer
+        token_id:
+          title: token_id
+          type: string
+        token_uri:
+          title: token_uri
+          type: string
+        tx_id:
+          title: tx_id
+          type: integer
+        updated_at:
+          title: updated_at
+          type: string
+      title: models.MintTask
+      type: object
+    models.MintTaskQueryResult:
+      example:
+        count: 0
+        items:
+        - mint_to: mint_to
+          amount: 6
+          chain_type: 5
+          chain_id: 5
+          contract: contract
+          created_at: created_at
+          error: error
+          tx_id: 2
+          deleted_at:
+            valid: true
+            time: time
+          contract_type: 2
+          token_uri: token_uri
+          token_id: token_id
+          updated_at: updated_at
+          mint_type: 9
+          id: 7
+          app_id: 1
+          hash: hash
+          status: 3
+        - mint_to: mint_to
+          amount: 6
+          chain_type: 5
+          chain_id: 5
+          contract: contract
+          created_at: created_at
+          error: error
+          tx_id: 2
+          deleted_at:
+            valid: true
+            time: time
+          contract_type: 2
+          token_uri: token_uri
+          token_id: token_id
+          updated_at: updated_at
+          mint_type: 9
+          id: 7
+          app_id: 1
+          hash: hash
+          status: 3
+      properties:
+        count:
+          title: count
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/models.MintTask'
+          title: items
+          type: array
+      title: models.MintTaskQueryResult
+      type: object
+    models.TransferTask:
+      example:
+        amount: 6
+        chain_type: 5
+        chain_id: 5
+        contract: contract
+        created_at: created_at
+        transfer_to: transfer_to
+        error: error
+        tx_id: 3
+        deleted_at:
+          valid: true
+          time: time
+        contract_type: 2
+        transfer_from: transfer_from
+        token_id: token_id
+        updated_at: updated_at
+        id: 7
+        app_id: 1
+        hash: hash
+        status: 9
+      properties:
+        amount:
+          title: amount
+          type: integer
+        app_id:
+          title: app_id
+          type: integer
+        chain_id:
+          title: chain_id
+          type: integer
+        chain_type:
+          title: chain_type
+          type: integer
+        contract:
+          title: contract
+          type: string
+        contract_type:
+          title: contract_type
+          type: integer
+        created_at:
+          title: created_at
+          type: string
+        deleted_at:
+          $ref: '#/components/schemas/gorm.DeletedAt'
+        error:
+          title: error
+          type: string
+        hash:
+          title: hash
+          type: string
+        id:
+          title: id
+          type: integer
+        status:
+          description: "0-pending, 1-success, 2-failed"
+          title: status
+          type: integer
+        token_id:
+          title: token_id
+          type: string
+        transfer_from:
+          title: transfer_from
+          type: string
+        transfer_to:
+          title: transfer_to
+          type: string
+        tx_id:
+          title: tx_id
+          type: integer
+        updated_at:
+          title: updated_at
+          type: string
+      title: models.TransferTask
+      type: object
+    models.TransferTaskQueryResult:
+      example:
+        count: 0
+        items:
+        - amount: 6
+          chain_type: 5
+          chain_id: 5
+          contract: contract
+          created_at: created_at
+          transfer_to: transfer_to
+          error: error
+          tx_id: 3
+          deleted_at:
+            valid: true
+            time: time
+          contract_type: 2
+          transfer_from: transfer_from
+          token_id: token_id
+          updated_at: updated_at
+          id: 7
+          app_id: 1
+          hash: hash
+          status: 9
+        - amount: 6
+          chain_type: 5
+          chain_id: 5
+          contract: contract
+          created_at: created_at
+          transfer_to: transfer_to
+          error: error
+          tx_id: 3
+          deleted_at:
+            valid: true
+            time: time
+          contract_type: 2
+          transfer_from: transfer_from
+          token_id: token_id
+          updated_at: updated_at
+          id: 7
+          app_id: 1
+          hash: hash
+          status: 9
+      properties:
+        count:
+          title: count
+          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/models.TransferTask'
+          title: items
+          type: array
+      title: models.TransferTaskQueryResult
+      type: object
+    multipart.FileHeader:
+      properties:
+        filename:
+          type: string
+        header:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        size:
+          type: integer
+      type: object
+    rainbow_errors.RainbowErrorDetailInfo:
+      properties:
+        code:
+          title: code
+          type: integer
+        message:
+          title: message
+          type: string
+      title: rainbow_errors.RainbowErrorDetailInfo
+      type: object
+    services.BurnBatchDto:
+      properties:
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        contract_address:
+          title: contract_address
+          type: string
+        contract_type:
+          enum:
+          - erc721
+          - erc1155
+          title: contract_type
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/services.BurnItemDto'
+          title: items
+          type: array
+        user:
+          title: user
+          type: string
+      required:
+      - chain
+      - contract_address
+      - contract_type
+      - items
+      title: services.BurnBatchDto
+      type: object
+    services.BurnDto:
+      properties:
+        amount:
+          title: amount
+          type: integer
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        contract_address:
+          title: contract_address
+          type: string
+        contract_type:
+          enum:
+          - erc721
+          - erc1155
+          title: contract_type
+          type: string
+        token_id:
+          title: token_id
+          type: string
+        user:
+          title: user
+          type: string
+      required:
+      - chain
+      - contract_address
+      - contract_type
+      - token_id
+      title: services.BurnDto
+      type: object
+    services.BurnItemDto:
+      properties:
+        amount:
+          title: amount
+          type: integer
+        token_id:
+          title: token_id
+          type: string
+      required:
+      - token_id
+      title: services.BurnItemDto
+      type: object
+    services.ContractAdminUpdateDto:
+      properties:
+        admin_address:
+          description: |-
+            Chain           string `form:"chain" json:"chain" binding:"required,oneof=conflux conflux_test"`
+            ContractAddress string `form:"contract_address" json:"contract_address" binding:"required"`
+          title: admin_address
+          type: string
+      required:
+      - admin_address
+      title: services.ContractAdminUpdateDto
+      type: object
+    services.ContractDeployDto:
+      properties:
+        auto_sponsor:
+          description: "default: true"
+          title: auto_sponsor
+          type: boolean
+        base_uri:
+          title: base_uri
+          type: string
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        is_sponsor_for_all_user:
+          description: "default: true"
+          title: is_sponsor_for_all_user
+          type: boolean
+        name:
+          title: name
+          type: string
+        owner_address:
+          title: owner_address
+          type: string
+        royalties_address:
+          title: royalties_address
+          type: string
+        royalties_bps:
+          title: royalties_bps
+          type: integer
+        symbol:
+          title: symbol
+          type: string
+        tokens_burnable:
+          description: "default: true"
+          title: tokens_burnable
+          type: boolean
+        tokens_transferable_by_admin:
+          description: "default: true"
+          title: tokens_transferable_by_admin
+          type: boolean
+        tokens_transferable_by_user:
+          description: "default: true"
+          title: tokens_transferable_by_user
+          type: boolean
+        transfer_cooldown_time:
+          description: "default: 0"
+          title: transfer_cooldown_time
+          type: integer
+        type:
+          enum:
+          - erc721
+          - erc1155
+          title: type
+          type: string
+      required:
+      - chain
+      - name
+      - symbol
+      - type
+      title: services.ContractDeployDto
+      type: object
+    services.CustomMintBatchDto:
+      properties:
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        contract_address:
+          title: contract_address
+          type: string
+        mint_items:
+          items:
+            $ref: '#/components/schemas/services.MintItemDto'
+          title: mint_items
+          type: array
+      required:
+      - chain
+      - contract_address
+      - mint_items
+      title: services.CustomMintBatchDto
+      type: object
+    services.CustomMintDto:
+      properties:
+        amount:
+          title: amount
+          type: integer
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        contract_address:
+          title: contract_address
+          type: string
+        metadata_uri:
+          title: metadata_uri
+          type: string
+        mint_to_address:
+          title: mint_to_address
+          type: string
+        token_id:
+          title: token_id
+          type: string
+      required:
+      - chain
+      - contract_address
+      - mint_to_address
+      title: services.CustomMintDto
+      type: object
+    services.EasyMintMetaDto:
+      properties:
+        chain:
+          title: chain
+          type: string
+        description:
+          title: description
+          type: string
+        file_url:
+          title: file_url
+          type: string
+        mint_to_address:
+          title: mint_to_address
+          type: string
+        name:
+          title: name
+          type: string
+      required:
+      - chain
+      - description
+      - file_url
+      - mint_to_address
+      - name
+      title: services.EasyMintMetaDto
+      type: object
+    services.MetadataDto:
+      properties:
+        animation_url:
+          title: animation_url
+          type: string
+        attributes:
+          items:
+            $ref: '#/components/schemas/models.ExposedMetadataAttribute'
+          title: attributes
+          type: array
+        description:
+          title: description
+          type: string
+        external_link:
+          title: external_link
+          type: string
+        image:
+          title: image
+          type: string
+        name:
+          title: name
+          type: string
+      required:
+      - description
+      - image
+      - name
+      title: services.MetadataDto
+      type: object
+    services.MintItemDto:
+      properties:
+        amount:
+          title: amount
+          type: integer
+        metadata_uri:
+          title: metadata_uri
+          type: string
+        mint_to_address:
+          title: mint_to_address
+          type: string
+        token_id:
+          title: token_id
+          type: string
+      required:
+      - mint_to_address
+      title: services.MintItemDto
+      type: object
+    services.NFT:
+      example:
+        owner: owner
+        token_id: token_id
+        contract_address: contract_address
+      properties:
+        contract_address:
+          title: contract_address
+          type: string
+        owner:
+          title: owner
+          type: string
+        token_id:
+          title: token_id
+          type: string
+      title: services.NFT
+      type: object
+    services.SendTxResp:
+      example:
+        tx_id: 0
+      properties:
+        tx_id:
+          title: tx_id
+          type: integer
+      title: services.SendTxResp
+      type: object
+    services.SetSponsorResp:
+      example:
+        sponsor_gas_tx_id: 6
+        sponsor_collateral_tx_id: 0
+      properties:
+        sponsor_collateral_tx_id:
+          title: sponsor_collateral_tx_id
+          type: integer
+        sponsor_gas_tx_id:
+          title: sponsor_gas_tx_id
+          type: integer
+      title: services.SetSponsorResp
+      type: object
+    services.SponsorInfo:
+      example:
+        gas_sponsor: gas_sponsor
+        collateral_sponsor_balance: collateral_sponsor_balance
+        gas_sponsor_balance: gas_sponsor_balance
+        gas_upper_bound: gas_upper_bound
+        collateral_sponsor: collateral_sponsor
+        is_all_white_listed: true
+      properties:
+        collateral_sponsor:
+          title: collateral_sponsor
+          type: string
+        collateral_sponsor_balance:
+          title: collateral_sponsor_balance
+          type: string
+        gas_sponsor:
+          title: gas_sponsor
+          type: string
+        gas_sponsor_balance:
+          title: gas_sponsor_balance
+          type: string
+        gas_upper_bound:
+          title: gas_upper_bound
+          type: string
+        is_all_white_listed:
+          title: is_all_white_listed
+          type: boolean
+      title: services.SponsorInfo
+      type: object
+    services.TransferBatchDto:
+      properties:
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        contract_address:
+          title: contract_address
+          type: string
+        contract_type:
+          enum:
+          - erc721
+          - erc1155
+          title: contract_type
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/services.TransferItemDto'
+          title: items
+          type: array
+      required:
+      - chain
+      - contract_address
+      - contract_type
+      - items
+      title: services.TransferBatchDto
+      type: object
+    services.TransferDto:
+      properties:
+        amount:
+          title: amount
+          type: integer
+        chain:
+          enum:
+          - conflux
+          - conflux_test
+          title: chain
+          type: string
+        contract_address:
+          title: contract_address
+          type: string
+        contract_type:
+          enum:
+          - erc721
+          - erc1155
+          title: contract_type
+          type: string
+        token_id:
+          title: token_id
+          type: string
+        transfer_from_address:
+          title: transfer_from_address
+          type: string
+        transfer_to_address:
+          title: transfer_to_address
+          type: string
+      required:
+      - chain
+      - contract_address
+      - contract_type
+      - token_id
+      - transfer_from_address
+      - transfer_to_address
+      title: services.TransferDto
+      type: object
+    services.TransferItemDto:
+      properties:
+        amount:
+          title: amount
+          type: integer
+        token_id:
+          title: token_id
+          type: string
+        transfer_from_address:
+          title: transfer_from_address
+          type: string
+        transfer_to_address:
+          title: transfer_to_address
+          type: string
+      required:
+      - token_id
+      - transfer_from_address
+      - transfer_to_address
+      title: services.TransferItemDto
+      type: object
+    services.TxResp:
+      example:
+        is_finalized: true
+        error_msg: error_msg
+        state_msg: state_msg
+        is_success: true
+        state_code: 0
+        hash: hash
+      properties:
+        error_msg:
+          title: error_msg
+          type: string
+        hash:
+          title: hash
+          type: string
+        is_finalized:
+          title: is_finalized
+          type: boolean
+        is_success:
+          title: is_success
+          type: boolean
+        state_code:
+          title: state_code
+          type: integer
+        state_msg:
+          title: state_msg
+          type: string
+      title: services.TxResp
+      type: object
+    services.UploadFilesResponse:
+      example:
+        file_url: file_url
+        file_name: file_name
+        file_type: file_type
+        file_size: 0
+      properties:
+        file_name:
+          title: file_name
+          type: string
+        file_size:
+          title: file_size
+          type: integer
+        file_type:
+          title: file_type
+          type: string
+        file_url:
+          title: file_url
+          type: string
+      title: services.UploadFilesResponse
+      type: object
+    textproto.MIMEHeader:
+      additionalProperties:
+        items:
+          type: string
+        type: array
+      type: object
+    UploadFile_request:
+      properties:
+        file:
+          description: uploaded file
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+    EasyMintByFile_request:
+      properties:
+        chain:
+          type: string
+        description:
+          type: string
+        mint_to_address:
+          type: string
+        name:
+          type: string
+        file:
+          description: file
+          format: binary
+          type: string
+      required:
+      - chain
+      - description
+      - file
+      - mint_to_address
+      - name
+      type: object
+x-original-swagger-version: "2.0"
