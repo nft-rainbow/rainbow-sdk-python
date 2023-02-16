@@ -8,7 +8,7 @@ docs/FilesApi.md
 docs/GormDeletedAt.md
 docs/LoginApi.md
 docs/MetadataApi.md
-docs/MiddlewaresAppLogin.md
+docs/MiddlewaresAppLoginInfo.md
 docs/MiddlewaresLoginResp.md
 docs/MintsApi.md
 docs/ModelsBurnTask.md
@@ -67,7 +67,7 @@ rainbowsdk/configuration.py
 rainbowsdk/exceptions.py
 rainbowsdk/models/__init__.py
 rainbowsdk/models/gorm_deleted_at.py
-rainbowsdk/models/middlewares_app_login.py
+rainbowsdk/models/middlewares_app_login_info.py
 rainbowsdk/models/middlewares_login_resp.py
 rainbowsdk/models/models_burn_task.py
 rainbowsdk/models/models_burn_task_query_result.py
@@ -111,4 +111,5 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
+test/test_middlewares_app_login_info.py
 tox.ini
