@@ -34,7 +34,7 @@ configuration = rainbowsdk.Configuration(
 with rainbowsdk.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = rainbowsdk.LoginApi(api_client)
-    app_login_info = rainbowsdk.MiddlewaresAppLogin() # MiddlewaresAppLogin | login info, contain app_id and app_secret
+    app_login_info = rainbowsdk.MiddlewaresAppLoginInfo() # MiddlewaresAppLoginInfo | login info, contain app_id and app_secret
 
     try:
         # App login
@@ -48,7 +48,7 @@ with rainbowsdk.ApiClient() as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **app_login_info** | [**MiddlewaresAppLogin**](MiddlewaresAppLogin.md)| login info, contain app_id and app_secret | 
+ **app_login_info** | [**MiddlewaresAppLoginInfo**](MiddlewaresAppLoginInfo.md)| login info, contain app_id and app_secret | 
 
 ### Return type
 

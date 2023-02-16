@@ -124,7 +124,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [GormDeletedAt](docs/GormDeletedAt.md)
- - [MiddlewaresAppLogin](docs/MiddlewaresAppLogin.md)
+ - [MiddlewaresAppLoginInfo](docs/MiddlewaresAppLoginInfo.md)
  - [MiddlewaresLoginResp](docs/MiddlewaresLoginResp.md)
  - [ModelsBurnTask](docs/ModelsBurnTask.md)
  - [ModelsBurnTaskQueryResult](docs/ModelsBurnTaskQueryResult.md)

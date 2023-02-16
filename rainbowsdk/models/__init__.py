@@ -15,7 +15,7 @@ from __future__ import absolute_import
 
 # import models into model package
 from rainbowsdk.models.gorm_deleted_at import GormDeletedAt
-from rainbowsdk.models.middlewares_app_login import MiddlewaresAppLogin
+from rainbowsdk.models.middlewares_app_login_info import MiddlewaresAppLoginInfo
 from rainbowsdk.models.middlewares_login_resp import MiddlewaresLoginResp
 from rainbowsdk.models.models_burn_task import ModelsBurnTask
 from rainbowsdk.models.models_burn_task_query_result import ModelsBurnTaskQueryResult
