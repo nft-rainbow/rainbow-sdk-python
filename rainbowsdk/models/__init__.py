@@ -28,6 +28,7 @@ from rainbowsdk.models.models_exposed_metadata_query_result import ModelsExposed
 from rainbowsdk.models.models_files_query_result import ModelsFilesQueryResult
 from rainbowsdk.models.models_mint_task import ModelsMintTask
 from rainbowsdk.models.models_mint_task_query_result import ModelsMintTaskQueryResult
+from rainbowsdk.models.models_transaction import ModelsTransaction
 from rainbowsdk.models.models_transfer_task import ModelsTransferTask
 from rainbowsdk.models.models_transfer_task_query_result import ModelsTransferTaskQueryResult
 from rainbowsdk.models.multipart_file_header import MultipartFileHeader
@@ -51,3 +52,4 @@ from rainbowsdk.models.services_transfer_dto import ServicesTransferDto
 from rainbowsdk.models.services_transfer_item_dto import ServicesTransferItemDto
 from rainbowsdk.models.services_tx_resp import ServicesTxResp
 from rainbowsdk.models.services_upload_files_response import ServicesUploadFilesResponse
+from rainbowsdk.models.services_upload_folder_response import ServicesUploadFolderResponse

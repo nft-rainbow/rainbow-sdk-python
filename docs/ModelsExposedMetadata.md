@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **animation_url** | **str** |  | [optional] 
+**app_id** | **int** |  | [optional] 
 **attributes** | [**list[ModelsExposedMetadataAttribute]**](ModelsExposedMetadataAttribute.md) |  | [optional] 
 **created_at** | **str** |  | [optional] 
 **deleted_at** | [**GormDeletedAt**](GormDeletedAt.md) |  | [optional] 

@@ -37,6 +37,7 @@ class ModelsExposedMetadata(object):
     """
     openapi_types = {
         'animation_url': 'str',
+        'app_id': 'int',
         'attributes': 'list[ModelsExposedMetadataAttribute]',
         'created_at': 'str',
         'deleted_at': 'GormDeletedAt',
@@ -52,6 +53,7 @@ class ModelsExposedMetadata(object):
 
     attribute_map = {
         'animation_url': 'animation_url',
+        'app_id': 'app_id',
         'attributes': 'attributes',
         'created_at': 'created_at',
         'deleted_at': 'deleted_at',
@@ -65,13 +67,14 @@ class ModelsExposedMetadata(object):
         'uri': 'uri'
     }
 
-    def __init__(self, animation_url=None, attributes=None, created_at=None, deleted_at=None, description=None, external_link=None, id=None, image=None, metadata_id=None, name=None, updated_at=None, uri=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, animation_url=None, app_id=None, attributes=None, created_at=None, deleted_at=None, description=None, external_link=None, id=None, image=None, metadata_id=None, name=None, updated_at=None, uri=None, local_vars_configuration=None):  # noqa: E501
         """ModelsExposedMetadata - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration.get_default_copy()
         self.local_vars_configuration = local_vars_configuration
 
         self._animation_url = None
+        self._app_id = None
         self._attributes = None
         self._created_at = None
         self._deleted_at = None
@@ -87,6 +90,8 @@ class ModelsExposedMetadata(object):
 
         if animation_url is not None:
             self.animation_url = animation_url
+        if app_id is not None:
+            self.app_id = app_id
         if attributes is not None:
             self.attributes = attributes
         if created_at is not None:
@@ -127,6 +132,27 @@ class ModelsExposedMetadata(object):
         """
 
         self._animation_url = animation_url
+
+    @property
+    def app_id(self):
+        """Gets the app_id of this ModelsExposedMetadata.  # noqa: E501
+
+
+        :return: The app_id of this ModelsExposedMetadata.  # noqa: E501
+        :rtype: int
+        """
+        return self._app_id
+
+    @app_id.setter
+    def app_id(self, app_id):
+        """Sets the app_id of this ModelsExposedMetadata.
+
+
+        :param app_id: The app_id of this ModelsExposedMetadata.  # noqa: E501
+        :type app_id: int
+        """
+
+        self._app_id = app_id
 
     @property
     def attributes(self):

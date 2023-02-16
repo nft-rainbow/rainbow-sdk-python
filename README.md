@@ -17,9 +17,9 @@ Python 2.7 and 3.4+
 If the python package is hosted on a repository, you can install directly using:
 
 ```sh
-pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
+pip install git+https://github.com/nft-rainbow/rainbow-sdk-python.git
 ```
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git`)
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/nft-rainbow/rainbow-sdk-python.git`)
 
 Then import the package:
 ```python
@@ -99,6 +99,8 @@ Class | Method | HTTP request | Description
 *FilesApi* | [**list_files**](docs/FilesApi.md#list_files) | **GET** /files/ | Obtain file list
 *FilesApi* | [**upload_file**](docs/FilesApi.md#upload_file) | **POST** /files/ | Upload file
 *FilesApi* | [**upload_file_to_oss**](docs/FilesApi.md#upload_file_to_oss) | **POST** /files/oss | Upload file to OSS
+*FilesApi* | [**upload_folder**](docs/FilesApi.md#upload_folder) | **POST** /files/folder | Upload folder
+*FilesApi* | [**upload_folder_to_oss**](docs/FilesApi.md#upload_folder_to_oss) | **POST** /files/folder/oss | Upload folder to oss
 *LoginApi* | [**login_app**](docs/LoginApi.md#login_app) | **POST** /login | App login
 *LoginApi* | [**refresh_auth**](docs/LoginApi.md#refresh_auth) | **GET** /refresh_token | Refresh JWT
 *MetadataApi* | [**create_metadata**](docs/MetadataApi.md#create_metadata) | **POST** /metadata/ | Create NFT metadata
@@ -111,6 +113,7 @@ Class | Method | HTTP request | Description
 *MintsApi* | [**get_mint_detail**](docs/MintsApi.md#get_mint_detail) | **GET** /mints/{id} | Mint NFT detail
 *MintsApi* | [**list_mints**](docs/MintsApi.md#list_mints) | **GET** /mints/ | Obtain NFT list
 *NFTsApi* | [**nft_info**](docs/NFTsApi.md#nft_info) | **GET** /nft/{address}/{token_id} | Get NFT info, mainly owner and metadata
+*NFTsApi* | [**update_nft_token_uri**](docs/NFTsApi.md#update_nft_token_uri) | **PUT** /nft/{address}/{token_id}/tokenUri | Update NFT token uri
 *TransactionApi* | [**get_transaction_by_id**](docs/TransactionApi.md#get_transaction_by_id) | **GET** /tx/{id} | Get transaction informantion by ID
 *TransfersApi* | [**batch_transfer_nft**](docs/TransfersApi.md#batch_transfer_nft) | **POST** /transfers/customizable/batch | Batch Transfer NFTs
 *TransfersApi* | [**get_transfer_detail**](docs/TransfersApi.md#get_transfer_detail) | **GET** /transfers/{id} | Transfer NFT detail
@@ -134,6 +137,7 @@ Class | Method | HTTP request | Description
  - [ModelsFilesQueryResult](docs/ModelsFilesQueryResult.md)
  - [ModelsMintTask](docs/ModelsMintTask.md)
  - [ModelsMintTaskQueryResult](docs/ModelsMintTaskQueryResult.md)
+ - [ModelsTransaction](docs/ModelsTransaction.md)
  - [ModelsTransferTask](docs/ModelsTransferTask.md)
  - [ModelsTransferTaskQueryResult](docs/ModelsTransferTaskQueryResult.md)
  - [MultipartFileHeader](docs/MultipartFileHeader.md)
@@ -157,6 +161,7 @@ Class | Method | HTTP request | Description
  - [ServicesTransferItemDto](docs/ServicesTransferItemDto.md)
  - [ServicesTxResp](docs/ServicesTxResp.md)
  - [ServicesUploadFilesResponse](docs/ServicesUploadFilesResponse.md)
+ - [ServicesUploadFolderResponse](docs/ServicesUploadFolderResponse.md)
 
 
 ## Documentation For Authorization
